@@ -5,11 +5,16 @@ let myCoords;
 let synth = new Tone.Synth().toDestination();
 
 let nePan = new Tone.Panner(0.5).toDestination();
-let nesynth = new Tone.Synth().toDestination();
+let nesynth = new Tone.Synth().connect(nePan);
 
 let ePan = new Tone.Panner(1).toDestination();
+let esynth = new Tone.Synth().connect(ePan);
+
 let nwPan = new Tone.Panner(-0.5).toDestination();
+let nwPan = new Tone.Synth().connect(nwPan);
+
 let wPan = new Tone.Panner(-1).toDestination();
+let wsynth = new Tone.Synth().connect(wPan);
 
 let socket = io()
   socket.on('connect', function() {
