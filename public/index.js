@@ -4,6 +4,13 @@ let clientList = [];
 let myCoords;
 let synth = new Tone.Synth().toDestination();
 
+let nePan = new Tone.Panner(0.5).toDestination();
+let nesynth = new Tone.Synth().toDestination();
+
+let ePan = new Tone.Panner(1).toDestination();
+let nwPan = new Tone.Panner(-0.5).toDestination();
+let wPan = new Tone.Panner(-1).toDestination();
+
 let socket = io()
   socket.on('connect', function() {
   // socket.emit('my event', "Connected mah boi!!!!!")
