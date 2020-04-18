@@ -125,7 +125,8 @@ function onClick(e) {
     let d = [client.location[0], client.location[1]]
     console.log(c.toString() == d.toString())
     if (c.toString() == d.toString()){
-      console.log(client.socketId)
+      console.log(client.socketId);
+      synth.triggerAttackRelease(client.note,"8n");      
       socket.emit("recv note", client)
     }
   })
