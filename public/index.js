@@ -69,7 +69,7 @@ socket.on('send ip', (res)=>{
 let num = 0;
 socket.on('play note', (res)=>{
   // console.log(res);
-  synth.triggerAttackRelease(res.note, res.length);
+  synth.triggerAttackRelease(res.note, "8n");
   console.log(res)
 
 })
@@ -79,7 +79,7 @@ function sendNote(client){
   console.log(socket, "@")
   console.log(client)
   // io.sockets.socket("play note", clientList[0].note);
-  socket.broadcast.to(client).emit('play note', "j")
+  // socket.broadcast.to(client).emit('play note', clientList[0])
   // socket.broadcast.to(client).emit("play note", peer.note)
 } 
 
@@ -126,7 +126,8 @@ function onClick(e) {
     console.log(c.toString() == d.toString())
     if (c.toString() == d.toString()){
       console.log(client.socketId);
-      synth.triggerAttackRelease(client.note,"8n");      
+      // synth.triggerAttackRelease(client.note,"16n");
+      
       socket.emit("recv note", client)
     }
   })
