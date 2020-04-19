@@ -11,7 +11,7 @@ let ePan = new Tone.Panner(1).toDestination();
 let esynth = new Tone.Synth().connect(ePan);
 
 let nwPan = new Tone.Panner(-0.5).toDestination();
-let nwPan = new Tone.Synth().connect(nwPan);
+let nwsynth = new Tone.Synth().connect(nwPan);
 
 let wPan = new Tone.Panner(-1).toDestination();
 let wsynth = new Tone.Synth().connect(wPan);
@@ -81,7 +81,7 @@ socket.on('send ip', (res)=>{
 let num = 0;
 socket.on('play note', (res)=>{
   // console.log(res);
-  synth.triggerAttackRelease(res.note, "8n");
+  esynth.triggerAttackRelease(res.note, "8n");
   console.log(res)
 
 })
@@ -132,15 +132,17 @@ function getLocation(){
 function onClick(e) {
     let targetCoord = this.getLatLng();
     let direction = turf.bearing([targetCoord.lat, targetCoord.lng], [myCoords[1], myCoords[0]] );
+  console.log(direction);
   clientList.forEach((client)=>{
     let c = [targetCoord.lat, targetCoord.lng]
     let d = [client.location[0], client.location[1]]
     console.log(c.toString() == d.toString())
     if (c.toString() == d.toString()){
-      console.log(client.socketId);
-      // synth.triggerAttackRelease(client.note,"16n");
+      console.log(client.note.length);
       
-      socket.emit("recv note", client)
+      esynth.triggerAttackRelease(client.note.note,"16n");
+      
+      socket.emit("recv note", client.note)
     }
   })
 }
