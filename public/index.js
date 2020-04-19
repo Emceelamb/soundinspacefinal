@@ -131,7 +131,8 @@ function getLocation(){
 
 function onClick(e) {
     let targetCoord = this.getLatLng();
-    let direction = turf.bearing([targetCoord.lat, targetCoord.lng], [myCoords[1], myCoords[0]] );
+  console.log(myCoords, targetCoord)
+    let direction = turf.bearing([myCoords[1], myCoords[0]],[targetCoord.lng, targetCoord.lat],  );
   console.log(direction);
   clientList.forEach((client)=>{
     let c = [targetCoord.lat, targetCoord.lng]
@@ -141,17 +142,20 @@ function onClick(e) {
       
       
         if( direction > -45 && direction < 45){
-          console.log("esyn")
-          esynth.triggerAttackRelease(client.note.note,"16n");         
-         
-        } else if (direction < -45){
-          console.log("wsy")
-          wsynth.triggerAttackRelease(client.note.note,"16n");
-        
-        } else {
-         console.log("defaultsn")
-        synth.triggerAttackRelease(client.note.note, "16n")      
+          console.log("nsyn")
+          synth.triggerAttackRelease(client.note.note, client.note.length)      
 
+         
+        } else if (direction < -45 && direction > -135){
+          console.log("wsy")
+          wsynth.triggerAttackRelease(client.note.note,client.note.length);
+        
+        } else if (direction>45 && direction <135) {
+         console.log("esn")
+          esynth.triggerAttackRelease(client.note.note,client.note.length);         
+      } else {
+        console.log("sou")
+        synth.triggerAttackRelease(client.note.note, client.note.length)
       }
       socket.emit("recv note", client.note)
     }
