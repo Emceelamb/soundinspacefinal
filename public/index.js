@@ -34,7 +34,7 @@ socket.on('server response', function(res){
     layerGroup.clearLayers();
   $('#clients').empty();
   clientList.forEach((client)=>{
-    let tempC = [client.location[0], client.location[1]+Math.random(0.0001)]
+    // let tempC = [client.location[0], client.location[1]+Math.random(0.0001)]
     var marker = L.marker(client.location)
                 .bindPopup(client.location.toString())
                 .on('mouseover', function (){this.openPopup()})
@@ -104,7 +104,7 @@ function getLocation(){
     var marker = L.marker(myCoords).addTo(layerGroup);
     
     console.log(myCoords)
-    tempCoords = [ position.coords.latitude+Math.random(0.000001), position.coords.longitude+Math.random(0.0000001) ]
+    tempCoords = [ position.coords.latitude+Math.random(-0.000001, 0.000001), position.coords.longitude+Math.random(-0.0000001, 0.0000001) ]
 
     mymap.setView(tempCoords, 13)
     // socket.emit('my event', myCoords)
@@ -143,20 +143,16 @@ function onClick(e) {
       
         if( direction > -45 && direction < 45){
           console.log("esyn")
-          esynth.triggerAttackRelease(client.note.note,"16n");
-          
-        }        
-          console.log("esyn")
-          esynth.triggerAttackRelease(client.note.note,"16n");
-          break;
-        case direction < -45:
+          esynth.triggerAttackRelease(client.note.note,"16n");         
+         
+        } else if (direction < -45){
           console.log("wsy")
           wsynth.triggerAttackRelease(client.note.note,"16n");
-          break;
-        default:
-          console.log("defaultsn")
-          synth.triggerAttackRelease(client.note.note, "16n")      
-          break;
+        
+        } else {
+         console.log("defaultsn")
+        synth.triggerAttackRelease(client.note.note, "16n")      
+
       }
       socket.emit("recv note", client.note)
     }
