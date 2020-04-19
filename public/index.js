@@ -136,9 +136,8 @@ function onClick(e) {
   clientList.forEach((client)=>{
     let c = [targetCoord.lat, targetCoord.lng]
     let d = [client.location[0], client.location[1]]
-    console.log(c.toString() == d.toString())
     if (c.toString() == d.toString()){
-      console.log(client.note.length);
+      // console.log(client.note.length);
       
       
         if( direction > -45 && direction < 45){
