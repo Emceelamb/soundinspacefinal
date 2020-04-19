@@ -140,8 +140,24 @@ function onClick(e) {
     if (c.toString() == d.toString()){
       console.log(client.note.length);
       
-      esynth.triggerAttackRelease(client.note.note,"16n");
       
+        if( direction > -45 && direction < 45){
+          console.log("esyn")
+          esynth.triggerAttackRelease(client.note.note,"16n");
+          
+        }        
+          console.log("esyn")
+          esynth.triggerAttackRelease(client.note.note,"16n");
+          break;
+        case direction < -45:
+          console.log("wsy")
+          wsynth.triggerAttackRelease(client.note.note,"16n");
+          break;
+        default:
+          console.log("defaultsn")
+          synth.triggerAttackRelease(client.note.note, "16n")      
+          break;
+      }
       socket.emit("recv note", client.note)
     }
   })
