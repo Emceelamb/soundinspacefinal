@@ -55,11 +55,12 @@ io.on('connection', (socket)=>{
 
 
   // Send note to client
-  io.to(`${socket.id}`).emit('play note', note)
+  // io.to(`${socket.id}`).emit('play note', note)
   })
 
   socket.on('recv note',(data)=>{
-    io.to(data.socketId).emit("play note", data.note)
+    io.to(data.socketId).emit("play note", data.direction)
+    console.log("this is play ", data)
 
   })
 

@@ -82,9 +82,9 @@ socket.on('send ip', (res)=>{
 
 let num = 0;
 socket.on('play note', (res)=>{
-  // console.log(res);
-  esynth.triggerAttackRelease(res.note, "8n");
-  console.log(res)
+  console.log(res, "dkf");
+  // esynth.triggerAttackRelease(res.note, "8n");
+  playSong(res)
 
 })
 
@@ -146,26 +146,35 @@ function onClick(e) {
       
         if( direction > -45 && direction < 45){
           console.log("nsyn")
+          client.direction="n"
           synth.triggerAttackRelease(client.note.note, client.note.length)      
-          playSong("n");
+          // playSong("n");
+            socket.emit("recv note", "n");
 
 
          
         } else if (direction < -45 && direction > -135){
           console.log("wsy")
+          client.direction="w"
           playSong("w")
-          wsynth.triggerAttackRelease(client.note.note,client.note.length);
+            socket.emit("recv note", "w");
+          // wsynth.triggerAttackRelease(client.note.note,client.note.length);
         
         } else if (direction>45 && direction <135) {
           playSong("e");
+          client.direction="e"
          console.log("esn")
-          esynth.triggerAttackRelease(client.note.note,client.note.length);         
+            socket.emit("recv note", "e");
+          // esynth.triggerAttackRelease(client.note.note,client.note.length);         
       } else {
         console.log("sou")
+          client.direction="n"
         playSong("n");
-        synth.triggerAttackRelease(client.note.note, client.note.length)
+            socket.emit("recv note", "n");
+        // synth.triggerAttackRelease(client.note.note, client.note.length)
       }
-      socket.emit("recv note", client.note)
+      // socket.emit("play note", direction)
+      socket.emit("recv note", client)
     }
   })
 }
