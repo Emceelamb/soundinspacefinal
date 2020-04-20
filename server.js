@@ -91,8 +91,8 @@ app.get('/', (req, res)=>{
   res.sendFile(path.join(__dirname +'/index.html'));
 });
 
-app.get('/map', (req, res)=>{
-  res.sendFile(path.join(__dirname +'/map.html'));
+app.get('/synth', (req, res)=>{
+  res.sendFile(path.join(__dirname +'/sytnh.html'));
 });
 
 server.listen(PORT, ()=>{
