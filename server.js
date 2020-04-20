@@ -93,7 +93,7 @@ app.get('/', (req, res)=>{
 });
 
 app.get('/synth', (req, res)=>{
-  res.sendFile(path.join(__dirname +'/sytnh.html'));
+  res.sendFile(path.join(__dirname +'/public/synth.html'));
 });
 
 server.listen(PORT, ()=>{
