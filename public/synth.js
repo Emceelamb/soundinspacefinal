@@ -37,7 +37,7 @@ socket.on('server response', function(res){
   $('#clients').empty();
   clientList.forEach((client)=>{
     // let tempC = [client.location[0], client.location[1]+Math.random(0.0001)]
-    var marker = L.marker(client.location)
+    var marker = L.marker(client.location, {icon: computerIcon})
                 .bindPopup(client.location.toString())
                 .on('mouseover', function (){this.openPopup()})
                 .on('mouseout', function(){this.closePopup()})
@@ -84,7 +84,7 @@ let num = 0;
 socket.on('play note', (res)=>{
   console.log(res, "dkf");
   // esynth.triggerAttackRelease(res.note, "8n");
-  playSong(res)
+  // playSong(res)
 
 })
 
@@ -103,14 +103,14 @@ function getLocation(){
   }
   navigator.geolocation.getCurrentPosition(position=>{
     myCoords = [ position.coords.latitude, position.coords.longitude ]
-    var marker = L.marker(myCoords).addTo(layerGroup);
+    var marker = L.marker(myCoords, {icon: computerIcon}).addTo(layerGroup);
     
     console.log(myCoords)
     tempCoords = [ position.coords.latitude+Math.random(-0.000001, 0.000001), position.coords.longitude+Math.random(-0.0000001, 0.0000001) ]
 
-    mymap.setView(tempCoords, 13)
-    // socket.emit('my event', myCoords)
-    socket.emit('my event', tempCoords)
+    mymap.setView(myCoords, 13)
+    // socket.emit('my event', tempCoords)
+    socket.emit('my event', myCoords)
   })
 }
 
@@ -123,7 +123,7 @@ function getLocation(){
   let layerGroup = L.layerGroup().addTo(mymap);
 
     // L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
     maxZoom: 18,
     id: 'mapbox/streets-v11',
     tileSize: 512,
@@ -142,8 +142,6 @@ function onClick(e) {
 
     if (c.toString() == d.toString()){
       // console.log(client.note.length);
-      
-      
         if( direction > -45 && direction < 45){
           console.log("nsyn")
           client.direction="n"
@@ -219,3 +217,13 @@ function playSong(dir){
   }
 }
 }
+
+var computerIcon = L.icon({
+    iconUrl: 'work.png',
+    iconSize:     [38, 38], // size of the icon
+    // shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
